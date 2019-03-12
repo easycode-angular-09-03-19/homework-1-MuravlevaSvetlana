@@ -48,4 +48,47 @@ interface Admin {
     type: string;
 }
 
+// TASK 5
+
+// exc 1
+
+abstract class Car {
+    protected mileage: number = 0;
+    protected fuel: number = 0;
+    public abstract drive(km):void;
+    public abstract refuel(liter):void;
+
+}
+
+// exc 2
+
+class RealCar extends Car {
+    
+    constructor() {
+        super();
+    }
+
+    public drive(km: number) {
+        if (km <= 0 || typeof km !== 'number') return console.log('Вы ввели недопустимые значения');
+        if (!this.fuel) return console.log('Вам необходимо заправиться');
+        if (this.fuel < km * 0.1) return console.log('У вас недостаточно бензина на такое расстояние');
+        this.mileage = km;
+        this.fuel -= km * 0.1;        
+    }
+
+    public refuel(liter: number) {
+        if (liter <= 0 || typeof liter !== 'number') return console.log('Вы ввели недопустимые значения');
+        this.fuel += liter;
+    }
+
+    public get information() {
+        return {
+            fuel: this.fuel,
+            mileage: this.mileage
+        }
+    }
+}
+
+const car = new RealCar();
+
 
