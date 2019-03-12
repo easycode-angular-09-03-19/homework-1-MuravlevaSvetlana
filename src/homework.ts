@@ -53,10 +53,10 @@ interface Admin {
 // exc 1
 
 abstract class Car {
-    protected mileage: number = 0;
-    protected fuel: number = 0;
-    public abstract drive(km):void;
-    public abstract refuel(liter):void;
+    protected _mileage: number = 0;
+    protected _fuel: number = 0;
+    public abstract drive(km: number):void;
+    public abstract refuel(liter: number):void;
 
 }
 
@@ -70,21 +70,21 @@ class RealCar extends Car {
 
     public drive(km: number) {
         if (km <= 0 || typeof km !== 'number') return console.log('Вы ввели недопустимые значения');
-        if (!this.fuel) return console.log('Вам необходимо заправиться');
-        if (this.fuel < km * 0.1) return console.log('У вас недостаточно бензина на такое расстояние');
-        this.mileage = km;
-        this.fuel -= km * 0.1;        
+        if (this._fuel < 1) return console.log('Вам необходимо заправиться');
+        if (this._fuel < km * 0.1) return console.log('У вас недостаточно бензина на такое расстояние');
+        this._mileage = km;
+        this._fuel -= km * 0.1;        
     }
 
     public refuel(liter: number) {
         if (liter <= 0 || typeof liter !== 'number') return console.log('Вы ввели недопустимые значения');
-        this.fuel += liter;
+        this._fuel += liter;
     }
 
     public get information() {
         return {
-            fuel: this.fuel,
-            mileage: this.mileage
+            fuel: this._fuel,
+            mileage: this._mileage
         }
     }
 }

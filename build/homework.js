@@ -34,8 +34,8 @@ reverseString('test');
 // exc 1
 class Car {
     constructor() {
-        this.mileage = 0;
-        this.fuel = 0;
+        this._mileage = 0;
+        this._fuel = 0;
     }
 }
 // exc 2
@@ -46,22 +46,22 @@ class RealCar extends Car {
     drive(km) {
         if (km <= 0 || typeof km !== 'number')
             return console.log('Вы ввели недопустимые значения');
-        if (!this.fuel)
+        if (this._fuel < 1)
             return console.log('Вам необходимо заправиться');
-        if (this.fuel < km * 0.1)
+        if (this._fuel < km * 0.1)
             return console.log('У вас недостаточно бензина на такое расстояние');
-        this.mileage = km;
-        this.fuel -= km * 0.1;
+        this._mileage = km;
+        this._fuel -= km * 0.1;
     }
     refuel(liter) {
         if (liter <= 0 || typeof liter !== 'number')
             return console.log('Вы ввели недопустимые значения');
-        this.fuel += liter;
+        this._fuel += liter;
     }
     get information() {
         return {
-            fuel: this.fuel,
-            mileage: this.mileage
+            fuel: this._fuel,
+            mileage: this._mileage
         };
     }
 }
