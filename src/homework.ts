@@ -3,11 +3,11 @@
 
 // TASK 1
 
-function fuctorial(num: number): void {
+function fuctorial(num: number): number {
     for (let i:number = num - 1; i > 0; i--){
         num *= i;
     }
-    console.log(num);
+    return(num);
 }
 
 fuctorial(5);
@@ -15,15 +15,8 @@ fuctorial(5);
 // TASK 2
 
 function multiply(...arg: number[]): number {
-    let result: number = 1;
-    if (!arguments.length) {
-        result = 0;
-    } else {
-        for (let i: number = 0; i < arguments.length; i++){
-            result *= arguments[i];
-        }
-    }
-    return result; 
+    if (arg.length == 0) return 0;
+    return arg.reduce((a, b) => a * b);
 }
 
 multiply();
@@ -31,10 +24,7 @@ multiply();
 // TASK 3
 
 function reverseString(str: string): string {
-    let string: string[] = str.split('');
-    string.reverse();
-    let result: string = string.join('');
-    return result;
+    return str.split("").reverse().join("");
 }
 
 reverseString('test');
@@ -42,10 +32,10 @@ reverseString('test');
 // TASK 4
 
 interface Admin {
-    name?: string;
-    email?: string;
-    password?: string;
-    type: string;
+    name: string;
+    email: string;
+    password: string;
+    type?: string;
 }
 
 // TASK 5
@@ -53,10 +43,13 @@ interface Admin {
 // exc 1
 
 abstract class Car {
-    protected _mileage: number = 0;
-    protected _fuel: number = 0;
-    public abstract drive(km: number):void;
-    public abstract refuel(liter: number):void;
+    constructor(protected _mileage: number, protected _fuel: number) {
+    }
+    public abstract drive(distance: number): void;
+    public abstract refuel(quantity: number): void;
+    
+    public abstract get fuel(): number;
+    public abstract get mileage(): number;
 
 }
 
@@ -64,31 +57,32 @@ abstract class Car {
 
 class RealCar extends Car {
     
-    constructor() {
-        super();
+    constructor(_mileage:number = 0, _fuel: number = 0) {
+        super(_mileage, _fuel);
     }
 
-    public drive(km: number) {
-        if (km <= 0 || typeof km !== 'number') return console.log('Вы ввели недопустимые значения');
+    public drive(distance: number): void {
+        if (distance <= 0 || typeof distance !== 'number') return console.log('Вы ввели недопустимые значения');
         if (this._fuel < 1) return console.log('Вам необходимо заправиться');
-        if (this._fuel < km * 0.1) return console.log('У вас недостаточно бензина на такое расстояние');
-        this._mileage = km;
-        this._fuel -= km * 0.1;        
+        if (this._fuel < distance * 0.1) return console.log('У вас недостаточно бензина на такое расстояние');
+        this._mileage = distance;
+        this._fuel -= distance * 0.1;
     }
 
-    public refuel(liter: number) {
-        if (liter <= 0 || typeof liter !== 'number') return console.log('Вы ввели недопустимые значения');
-        this._fuel += liter;
+    public refuel(quantity: number): void {
+        if (quantity <= 0 || typeof quantity !== 'number') return console.log('Вы ввели недопустимые значения');
+        this._fuel += quantity;
     }
 
-    public get information() {
-        return {
-            fuel: this._fuel,
-            mileage: this._mileage
-        }
+    public get fuel(): number {
+        return this._fuel;
+    }
+    
+    public get mileage(): number {
+        return this._mileage;
     }
 }
 
-const car = new RealCar();
+const car: RealCar = new RealCar();
 
 

@@ -5,64 +5,54 @@ function fuctorial(num) {
     for (let i = num - 1; i > 0; i--) {
         num *= i;
     }
-    console.log(num);
+    return (num);
 }
 fuctorial(5);
 // TASK 2
 function multiply(...arg) {
-    let result = 1;
-    if (!arguments.length) {
-        result = 0;
-    }
-    else {
-        for (let i = 0; i < arguments.length; i++) {
-            result *= arguments[i];
-        }
-    }
-    return result;
+    if (arg.length == 0)
+        return 0;
+    return arg.reduce((a, b) => a * b);
 }
 multiply();
 // TASK 3
 function reverseString(str) {
-    let string = str.split('');
-    string.reverse();
-    let result = string.join('');
-    return result;
+    return str.split("").reverse().join("");
 }
 reverseString('test');
 // TASK 5
 // exc 1
 class Car {
-    constructor() {
-        this._mileage = 0;
-        this._fuel = 0;
+    constructor(_mileage, _fuel) {
+        this._mileage = _mileage;
+        this._fuel = _fuel;
     }
 }
 // exc 2
 class RealCar extends Car {
-    constructor() {
-        super();
+    constructor(_mileage = 0, _fuel = 0) {
+        super(_mileage, _fuel);
     }
-    drive(km) {
-        if (km <= 0 || typeof km !== 'number')
+    drive(distance) {
+        if (distance <= 0 || typeof distance !== 'number')
             return console.log('Вы ввели недопустимые значения');
         if (this._fuel < 1)
             return console.log('Вам необходимо заправиться');
-        if (this._fuel < km * 0.1)
+        if (this._fuel < distance * 0.1)
             return console.log('У вас недостаточно бензина на такое расстояние');
-        this._mileage = km;
-        this._fuel -= km * 0.1;
+        this._mileage = distance;
+        this._fuel -= distance * 0.1;
     }
-    refuel(liter) {
-        if (liter <= 0 || typeof liter !== 'number')
+    refuel(quantity) {
+        if (quantity <= 0 || typeof quantity !== 'number')
             return console.log('Вы ввели недопустимые значения');
-        this._fuel += liter;
+        this._fuel += quantity;
     }
-    get information() {
-        return {
-            fuel: this._fuel,
-            mileage: this._mileage
-        };
+    get fuel() {
+        return this._fuel;
+    }
+    get mileage() {
+        return this._mileage;
     }
 }
 const car = new RealCar();
